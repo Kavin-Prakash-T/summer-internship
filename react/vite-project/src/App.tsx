@@ -1,9 +1,9 @@
-import Products from "./components/Products"
+import ContactForm from "./components/ContactForm"
 
 function App() {
   return (
     <>
-     <Products/>
+     <ContactForm/>
     </>
   )
 }
