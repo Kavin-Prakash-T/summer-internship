@@ -11,12 +11,20 @@ interface Post {
   body: string;
 }
 
-
+function Button(){
+const {pending}=useFormStatus();
+return(
+    <>
+    <button type="submit" disabled={pending}>
+        {pending ? "Submitting..." : "Submit"}
+    </button>
+    </>
+)
+}
 
 export default function Blog() {
 
-  const { pending } = useFormStatus()
-
+ 
   const [data, setData] = useState<Post[]>([])
   async function getPost(id: any) {
     const res = await fetch(`https://dummyjson.com/posts/${id}`);
@@ -45,9 +53,7 @@ export default function Blog() {
             <small>Post ID: {post.id}</small>
             <form action={submitFeedbackFormWithId}>
               <textarea rows={5} cols={10} placeholder="Enter your feedback..." name='feedback' ></textarea>
-              <button type="submit" disabled={pending}>
-                {pending ? "Submitting Feedback.........." : "Submit"}
-              </button>
+              <Button></Button>
             </form>
           </div>
 
