@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from "react"
 import { submitFeedbackForm } from '@/app/actions/submitFeedbackForm';
+import { useFormStatus } from 'react-dom';
 interface Post {
   id: number;
   title: string;
@@ -14,6 +15,7 @@ interface Post {
 
 export default function Blog() {
 
+  const { pending } = useFormStatus()
 
   const [data, setData] = useState<Post[]>([])
   async function getPost(id: any) {
@@ -43,7 +45,9 @@ export default function Blog() {
             <small>Post ID: {post.id}</small>
             <form action={submitFeedbackFormWithId}>
               <textarea rows={5} cols={10} placeholder="Enter your feedback..." name='feedback' ></textarea>
-              <button type="submit">Submit Feedback</button>
+              <button type="submit" disabled={pending}>
+                {pending ? "Submitting Feedback.........." : "Submit"}
+              </button>
             </form>
           </div>
 
