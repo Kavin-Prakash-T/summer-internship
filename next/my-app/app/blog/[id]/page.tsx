@@ -1,32 +1,54 @@
-import Link from 'next/link';
-import BlogFeedbackForm from '@/app/components/BlogFeedbackForm';
+'use client'
 
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useState, useEffect } from "react"
+import { submitFeedbackForm } from '@/app/actions/submitFeedbackForm';
 interface Post {
-  userId: number;
   id: number;
   title: string;
   body: string;
 }
 
-async function getPost(id: string) {
-  const res = await fetch(`https://dummyjson.com/posts/${id}`);
-  return res.json();
-}
 
-export default async function Blog({ params }: { params: { id: string } }) {
-  const post: Post = await getPost(params.id);
+
+export default function Blog() {
+
+
+  const [data, setData] = useState<Post[]>([])
+  async function getPost(id: any) {
+    const res = await fetch(`https://dummyjson.com/posts/${id}`);
+    const data = await res.json()
+    setData([data])
+  }
+  const { id } = useParams()
+
+  useEffect(() => {
+    if (id)
+      getPost(id);
+  }, [id])
+
+  const submitFeedbackFormWithId = submitFeedbackForm.bind(null, String(id))
 
   return (
     <>
       <h1>Blog Post</h1>
       <Link href="/blog">Back to Blog</Link>
-      
+
       <div>
-        <h2>{post.title}</h2>
-        <p>{post.body}</p>
-        <small>Post ID: {post.id}</small>
+        {data.map((post) => (
+          <div key={post.id}>
+            <h2>{post.title}</h2>
+            <p>{post.body}</p>
+            <small>Post ID: {post.id}</small>
+            <form action={submitFeedbackFormWithId}>
+              <textarea rows={5} cols={10} placeholder="Enter your feedback..." name='feedback' ></textarea>
+              <button type="submit">Submit Feedback</button>
+            </form>
+          </div>
+
+        ))}
       </div>
-      <BlogFeedbackForm postId={post.id} />
     </>
   );
 }

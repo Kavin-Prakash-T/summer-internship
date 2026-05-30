@@ -21,7 +21,7 @@ export default async function Blog() {
     <>
       <h1>Blog Posts</h1>
       <Link href="/">Back to Home</Link>
-      
+
       {posts.map((post) => (
         <Link href={`/blog/${post.id}`} key={post.id}>
           <div>
