@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from "react"
-import { submitFeedbackForm } from '@/app/actions/submitFeedbackForm';
+import { submitFeedbackData } from '@/app/actions/submitFeedbackData';
 import { useFormStatus } from 'react-dom';
 interface Post {
   id: number;
@@ -38,7 +38,7 @@ export default function Blog() {
       getPost(id);
   }, [id])
 
-  const submitFeedbackFormWithId = submitFeedbackForm.bind(null, String(id))
+  const submitFeedbackFormWithId = submitFeedbackData.bind(null, String(id))
 
   return (
     <>
