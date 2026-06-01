@@ -1,18 +1,8 @@
 "use client"
-import { useFormStatus } from "react-dom";
 import { getAverageRating, submitRating } from "../actions/submitRating";
 import { useEffect, useState } from "react";
+import Button from "../components/Button"
 
-function Button(){
-const {pending}=useFormStatus();
-return(
-    <>
-    <button type="submit" disabled={pending}>
-        {pending ? "Submitting..." : "Submit"}
-    </button>
-    </>
-)
-}
 
 function page() {
     async function fetchavgrating(){
@@ -34,7 +24,7 @@ function page() {
          <input type="email" name="email" placeholder="Enter the email"/>
           <input type="text" name="review" placeholder="Enter the review"/>
            <input type="number" name="rating" placeholder="Enter the ratings"/>
-            <Button></Button>
+            <Button/>
     </form>
     </>
   )
